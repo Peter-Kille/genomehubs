@@ -31,6 +31,7 @@ Create a MySQL Docker container to host the Ensembl Databases for your GenomeHub
  simplify connections between containers by using names rather than IP addresses, it is necessary to connect containers to the same named network bridge using `--network genomehubs-network`.
 * `MYSQL_ROOT_HOST='172.16.0.0/255.240.0.0'` will allow all other Docker containers on the same machine to connect to the mysql container as root, even if they are on a different Docker network. This is the simplest configuration as it does not matter which of the available subnets the Docker network has been created on, or which IP addresses are assigned to each of the containers. For more security you may wish to check the subnet of your bridge network and/or restrict access to the IP addresses of specific containers.
 
+
 {% common %}
 ```
 $ docker run -d \
@@ -73,7 +74,7 @@ $ nano ~/genomehubs/v1/ensembl/conf/database.ini
 # (some lines omitted)
 [DATABASE]
   DB_SESSION_USER = ensrw
-  DB_SESSION_PASS = CHANGEME
+  DB_SESSION_PASSWORD = CHANGEME
 
   DB_IMPORT_USER = importer
   DB_IMPORT_PASSWORD = CHANGEME
@@ -139,6 +140,37 @@ $ nano ~/genomehubs/v1/ensembl/conf/database.ini
 ```
 
 {% endmethod %}
+
+
+You may need to create a mysql root account that connects from anywhere (When deploying for production, tie down the location a little more!)
+
+```
+$ docker exec -it genomehubs-mysql bash
+# mysql -u root -pWorm123
+mysql> SELECT User, Host, Password FROM mysql.user;
++---------------+-----------+-------------------------------------------+
+| User          | Host      | Password                                  |
++---------------+-----------+-------------------------------------------+
+| root          | localhost | *CC2DE4A25B5AEC918D17CC33BC8B036FDE01BA29 |
+| healthchecker | localhost | *36C82179AFA394C4B9655005DD2E482D30A4BDF7 |
++---------------+-----------+-------------------------------------------+
+mysql> 
+mysql> CREATE USER 'monty'@'*' IDENTIFIED BY 'Worm123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'*' WITH GRANT OPTION;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> CREATE USER 'root'@'%' IDENTIFIED BY 'Worm123';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.00 sec)
+mysql> flush privileges;
+mysql> exit
+# exit
+```
+
 
 
 {% method %}
