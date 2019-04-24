@@ -163,7 +163,8 @@ Create and edit a `<database name>.ini` file in the `import/conf` directory to s
 {% sample lang="e93" %}
 ```
 $ cd ~/genomehubs/v1/import/conf/
-$ cp genus_species_assembly_core_40_93_1.ini operophtera_brumata_obru1_core_40_93_1.ini
+$ #### Wrong cp genus_species_assembly_core_40_93_1.ini operophtera_brumata_obru1_core_40_93_1.ini
+$ cp genus_species_asm_core_40_93_1.ini operophtera_brumata_obru1_core_40_93_1.ini
 $ nano operophtera_brumata_obru1_core_40_93_1.ini
 # update values to match your species/assembly name and other details
 [DATABASE_CORE]
@@ -355,7 +356,9 @@ Check the import and verification log files for errors:
 ```
 $ ls ~/genomehubs/v1/import/data/operophtera_brumata_obru1_core_40_93_1
 
-$ ls ~/genomehubs/v1/import/data/operophtera_brumata_obru1_core_40_93_1/logs
+$ ## Wrong ls ~/genomehubs/v1/import/data/operophtera_brumata_obru1_core_40_93_1/logs 
+
+$ ls ~/genomehubs/v1/import/data/operophtera_brumata_obru1_core_40_93_1/log
 
 $ ls ~/genomehubs/v1/import/data/operophtera_brumata_obru1_core_40_93_1/summary
 
