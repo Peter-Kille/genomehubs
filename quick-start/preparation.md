@@ -42,18 +42,6 @@ Clone the example configuration files from the [genomehubs/template](https://git
 $ mkdir ~/genomehubs && cd ~/genomehubs
 $ git clone https://github.com/genomehubs/template -b 18.10 v1
 ```
-{% sample lang="e89" %}
-```
-$ mkdir ~/genomehubs && cd ~/genomehubs
-$ git clone https://github.com/genomehubs/template -b 17.06 v1
-```
-{% sample lang="e85" %}
-```
-$ mkdir ~/genomehubs && cd ~/genomehubs
-$ git clone https://github.com/genomehubs/template -b 17.03 v1
-```
-{% endmethod %}
-
 
 ### Quick setup with no public domain
 
